@@ -28,7 +28,15 @@ def main():
 def count_fully_overlapping_assignments(assignments: SectionAssignmentList) -> int:
     """Returns the count of section assignments where one of the pair fully overlaps the other
 
-    >>> count_fully_overlapping_assignments([({2, 3, 4}, {8, 6, 7}), ({2, 3}, {4, 5}), ({5, 6, 7}, {8, 9, 7}), ({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7}), ({6}, {4, 5, 6}), ({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})])
+    >>> example_input = [
+    ...     ({2, 3, 4}, {8, 6, 7}),
+    ...     ({2, 3}, {4, 5}),
+    ...     ({5, 6, 7}, {8, 9, 7}),
+    ...     ({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7}),
+    ...     ({6}, {4, 5, 6}),
+    ...     ({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})
+    ... ]
+    >>> count_fully_overlapping_assignments(example_input)
     2
     """
     return sum(1 if one_fully_contains_the_other(a, b) else 0 for a, b in assignments)
@@ -37,7 +45,15 @@ def count_fully_overlapping_assignments(assignments: SectionAssignmentList) -> i
 def count_overlapping_assignments(assignments: SectionAssignmentList) -> int:
     """Returns the count of section assignments where one of the pair fully overlaps the other
 
-    >>> count_overlapping_assignments([({2, 3, 4}, {8, 6, 7}), ({2, 3}, {4, 5}), ({5, 6, 7}, {8, 9, 7}), ({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7}), ({6}, {4, 5, 6}), ({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})])
+    >>> example_input = [
+    ...     ({2, 3, 4}, {8, 6, 7}),
+    ...     ({2, 3}, {4, 5}),
+    ...     ({5, 6, 7}, {8, 9, 7}),
+    ...     ({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7}),
+    ...     ({6}, {4, 5, 6}),
+    ...     ({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})
+    ... ]
+    >>> count_overlapping_assignments(example_input)
     4
     """
     return sum(1 if one_overlaps_the_other(a, b) else 0 for a, b in assignments)
@@ -75,10 +91,21 @@ def parse_section_assignments(file_in: TextIO) -> SectionAssignmentList:
     r"""Parse pairs of section assignments from the input file
 
     >>> from io import StringIO
-    >>> with StringIO("1-5,6-10\n") as f: parse_section_assignments(f)
+    >>> with StringIO("1-5,6-10\n") as f:
+    ...     parse_section_assignments(f)
     [({1, 2, 3, 4, 5}, {6, 7, 8, 9, 10})]
-    >>> with StringIO("2-4,6-8\n2-3,4-5\n5-7,7-9\n2-8,3-7\n6-6,4-6\n2-6,4-8\n") as f: parse_section_assignments(f)
-    [({2, 3, 4}, {8, 6, 7}), ({2, 3}, {4, 5}), ({5, 6, 7}, {8, 9, 7}), ({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7}), ({6}, {4, 5, 6}), ({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})]
+
+    >>> example_input = "2-4,6-8\n2-3,4-5\n5-7,7-9\n2-8,3-7\n6-6,4-6\n2-6,4-8\n"
+    >>> with StringIO(example_input) as f:
+    ...     parse_section_assignments(f) == [
+    ...         ({2, 3, 4}, {8, 6, 7}),
+    ...         ({2, 3}, {4, 5}),
+    ...         ({5, 6, 7}, {8, 9, 7}),
+    ...         ({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7}),
+    ...         ({6}, {4, 5, 6}),
+    ...         ({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})
+    ...     ]
+    True
     """
 
     def _str_to_assignment(s: str) -> SectionAssignment:
