@@ -29,9 +29,9 @@ def count_fully_overlapping_assignments(assignments: SectionAssignmentList) -> i
     """Returns the count of section assignments where one of the pair fully overlaps the other
 
     >>> example_input = [
-    ...     ({2, 3, 4}, {8, 6, 7}),
+    ...     ({2, 3, 4}, {6, 7, 8}),
     ...     ({2, 3}, {4, 5}),
-    ...     ({5, 6, 7}, {8, 9, 7}),
+    ...     ({5, 6, 7}, {7, 8, 9}),
     ...     ({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7}),
     ...     ({6}, {4, 5, 6}),
     ...     ({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})
@@ -46,9 +46,9 @@ def count_overlapping_assignments(assignments: SectionAssignmentList) -> int:
     """Returns the count of section assignments where one of the pair fully overlaps the other
 
     >>> example_input = [
-    ...     ({2, 3, 4}, {8, 6, 7}),
+    ...     ({2, 3, 4}, {6, 7, 8}),
     ...     ({2, 3}, {4, 5}),
-    ...     ({5, 6, 7}, {8, 9, 7}),
+    ...     ({5, 6, 7}, {7, 8, 9}),
     ...     ({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7}),
     ...     ({6}, {4, 5, 6}),
     ...     ({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})
@@ -62,13 +62,17 @@ def count_overlapping_assignments(assignments: SectionAssignmentList) -> int:
 def one_fully_contains_the_other(a: SectionAssignment, b: SectionAssignment) -> bool:
     """Returns True if a is a subset or b or if b is a subset of a
 
-    >>> one_fully_contains_the_other({1, 2, 3}, {2})
+    >>> one_fully_contains_the_other({2, 3, 4}, {6, 7, 8})
+    False
+    >>> one_fully_contains_the_other({2, 3}, {4, 5})
+    False
+    >>> one_fully_contains_the_other({5, 6, 7}, {7, 8, 9})
+    False
+    >>> one_fully_contains_the_other({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7})
     True
-    >>> one_fully_contains_the_other({1, 2, 3}, {1, 2})
+    >>> one_fully_contains_the_other({6}, {4, 5, 6})
     True
-    >>> one_fully_contains_the_other({1, 2}, {1, 2, 3})
-    True
-    >>> one_fully_contains_the_other({1, 2}, {2, 3})
+    >>> one_fully_contains_the_other({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})
     False
     """
     return a.issubset(b) or b.issubset(a)
@@ -77,12 +81,18 @@ def one_fully_contains_the_other(a: SectionAssignment, b: SectionAssignment) -> 
 def one_overlaps_the_other(a: SectionAssignment, b: SectionAssignment) -> bool:
     """Returns True if a overlaps b
 
-    >>> one_overlaps_the_other({1, 2, 3}, {2, 3, 4})
-    True
-    >>> one_overlaps_the_other({1, 2}, {2, 3})
-    True
-    >>> one_overlaps_the_other({1, 2}, {3, 4})
+    >>> one_overlaps_the_other({2, 3, 4}, {6, 7, 8})
     False
+    >>> one_overlaps_the_other({2, 3}, {4, 5})
+    False
+    >>> one_overlaps_the_other({5, 6, 7}, {7, 8, 9})
+    True
+    >>> one_overlaps_the_other({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7})
+    True
+    >>> one_overlaps_the_other({6}, {4, 5, 6})
+    True
+    >>> one_overlaps_the_other({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})
+    True
     """
     return not a.isdisjoint(b)
 
@@ -98,9 +108,9 @@ def parse_section_assignments(file_in: TextIO) -> SectionAssignmentList:
     >>> example_input = "2-4,6-8\n2-3,4-5\n5-7,7-9\n2-8,3-7\n6-6,4-6\n2-6,4-8\n"
     >>> with StringIO(example_input) as f:
     ...     parse_section_assignments(f) == [
-    ...         ({2, 3, 4}, {8, 6, 7}),
+    ...         ({2, 3, 4}, {6, 7, 8}),
     ...         ({2, 3}, {4, 5}),
-    ...         ({5, 6, 7}, {8, 9, 7}),
+    ...         ({5, 6, 7}, {7, 8, 9}),
     ...         ({2, 3, 4, 5, 6, 7, 8}, {3, 4, 5, 6, 7}),
     ...         ({6}, {4, 5, 6}),
     ...         ({2, 3, 4, 5, 6}, {4, 5, 6, 7, 8})
