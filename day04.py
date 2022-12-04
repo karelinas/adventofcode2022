@@ -26,7 +26,7 @@ def main():
 
 
 def count_fully_overlapping_assignments(assignments: SectionAssignmentList) -> int:
-    """Returns the count of section assignments where one of the pair fully overlaps the other
+    """Returns the count of section assignments where one fully overlaps the other
 
     >>> example_input = [
     ...     ({2, 3, 4}, {6, 7, 8}),
@@ -43,7 +43,7 @@ def count_fully_overlapping_assignments(assignments: SectionAssignmentList) -> i
 
 
 def count_overlapping_assignments(assignments: SectionAssignmentList) -> int:
-    """Returns the count of section assignments where one of the pair fully overlaps the other
+    """Returns the count of section assignments where the two overlap
 
     >>> example_input = [
     ...     ({2, 3, 4}, {6, 7, 8}),
